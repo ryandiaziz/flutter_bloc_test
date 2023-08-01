@@ -16,8 +16,10 @@ class HomePage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // widget blocBuilder dapat menggantikan streamBuilder
           BlocBuilder<Counter, int>(
             bloc: myCounter,
+            // fitur yang akan merender dengan kondisi true
             buildWhen: (previous, current) {
               if (current % 2 == 1) {
                 return true;
