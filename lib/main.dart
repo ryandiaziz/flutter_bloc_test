@@ -1,3 +1,4 @@
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,49 +10,74 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: HomePage(),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class CounterCubit extends Cubit<int> {
+  CounterCubit({this.init = 0}) : super(init);
 
-  Stream<int> countStream() async* {
-    for (int i = 0; i < 10; i++) {
-      await Future.delayed(const Duration(seconds: 1));
-      yield i;
-    }
+  int init;
+
+  void increament() {
+    emit(state + 1);
   }
+
+  void decreament() {
+    emit(state - 1);
+  }
+}
+
+class HomePage extends StatelessWidget {
+  HomePage({super.key});
+  CounterCubit myCounter = CounterCubit(init: 13);
 
   @override
   Widget build(BuildContext context) {
-    print('REBUID');
+    print('REBUILD');
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Stream App'),
+        title: const Text('Cubit App'),
         centerTitle: true,
       ),
-      body: StreamBuilder(
-        stream: countStream(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: Text('Loading...'),
-            );
-          } else {
-            return Center(
-              child: Text(
-                '${snapshot.data}',
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w900,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          StreamBuilder(
+            initialData: myCounter.init,
+            stream: myCounter.stream,
+            builder: (context, snapshot) {
+              return Center(
+                child: Text(
+                  '${snapshot.data}',
+                  style: const TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              );
+            },
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IconButton(
+                onPressed: () => myCounter.decreament(),
+                icon: const Icon(
+                  Icons.remove,
                 ),
               ),
-            );
-          }
-        },
+              IconButton(
+                onPressed: () => myCounter.increament(),
+                icon: const Icon(
+                  Icons.add,
+                ),
+              ),
+            ],
+          )
+        ],
       ),
     );
   }
