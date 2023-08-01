@@ -29,12 +29,15 @@ class CounterCubit extends Cubit<int> {
     emit(state - 1);
   }
 
+  // Here...
+  // Fitur untuk memantau perubahan dari state
   @override
   void onChange(Change<int> change) {
     super.onChange(change);
     print(change);
   }
 
+  // Fitur untuk memantau error dari state
   @override
   void onError(Object error, StackTrace stackTrace) {
     super.onError(error, stackTrace);
