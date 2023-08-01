@@ -16,13 +16,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// Here...
 class CounterCubit extends Cubit<int> {
-  CounterCubit({this.init = 0}) : super(init);
+  CounterCubit({this.init = 0}) : super(init); // constructor
 
-  int init;
+  int init; // data inisialisasi
 
   void increament() {
-    emit(state + 1);
+    emit(state + 1); // Set data state
   }
 
   void decreament() {
@@ -32,6 +33,7 @@ class CounterCubit extends Cubit<int> {
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
+  // Membuar object cubit dari class yang sudah dibuat
   CounterCubit myCounter = CounterCubit(init: 13);
 
   @override
@@ -46,8 +48,9 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           StreamBuilder(
-            initialData: myCounter.init,
-            stream: myCounter.stream,
+            initialData:
+                myCounter.init, // Memanggil variabel init dari object myCounter
+            stream: myCounter.stream, // Memanggil stream dari object myCounter
             builder: (context, snapshot) {
               return Center(
                 child: Text(
