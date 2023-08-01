@@ -28,6 +28,18 @@ class CounterCubit extends Cubit<int> {
   void decreament() {
     emit(state - 1);
   }
+
+  @override
+  void onChange(Change<int> change) {
+    super.onChange(change);
+    print(change);
+  }
+
+  @override
+  void onError(Object error, StackTrace stackTrace) {
+    super.onError(error, stackTrace);
+    print(error);
+  }
 }
 
 class HomePage extends StatelessWidget {
