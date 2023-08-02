@@ -16,8 +16,10 @@ class HomePage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // fitur untuk memantau sebuah state
           BlocListener<Counter, int>(
             bloc: myCounter,
+            // akan menampilkan data dengan kondisi khusus
             listenWhen: (previous, current) {
               if (current % 2 == 0) {
                 return true;
@@ -25,6 +27,7 @@ class HomePage extends StatelessWidget {
                 return false;
               }
             },
+            // proses yang akan dilakukan ketika adanya perubahan state
             listener: (context, state) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -35,6 +38,7 @@ class HomePage extends StatelessWidget {
                 ),
               );
             },
+            // bloc listener harus memiliki child (bisa apa saja)
             child: BlocBuilder<Counter, int>(
               bloc: myCounter,
               builder: (context, state) {
