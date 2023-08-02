@@ -9,6 +9,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // deklarasi state agar lebih mudah digunakan
     Counter mycounter = BlocProvider.of<Counter>(context);
     return Scaffold(
       appBar: AppBar(
@@ -23,7 +24,9 @@ class HomePage extends StatelessWidget {
             children: [
               Button(
                 icon: Icons.remove,
-                ontap: () => mycounter.decreament(),
+                // menggunakan fungsi pada state
+                ontap: () => mycounter
+                    .decreament(), // atau BlocProvider.of<Counter>(context).decreament()
               ),
               Container(
                 height: 70,
