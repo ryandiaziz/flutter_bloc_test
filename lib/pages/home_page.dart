@@ -16,8 +16,26 @@ class HomePage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BlocListener<Counter, int>(
+          BlocConsumer<Counter, int>(
             bloc: myCounter,
+            buildWhen: (previous, current) {
+              if (current >= 10) {
+                return true;
+              } else {
+                return false;
+              }
+            },
+            builder: (context, state) {
+              return Center(
+                child: Text(
+                  '$state',
+                  style: const TextStyle(
+                    fontSize: 35,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              );
+            },
             listenWhen: (previous, current) {
               if (current % 2 == 0) {
                 return true;
@@ -26,29 +44,28 @@ class HomePage extends StatelessWidget {
               }
             },
             listener: (context, state) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  duration: const Duration(milliseconds: 300),
-                  content: Text(
-                    '$state adalah data genap!',
-                  ),
-                ),
-              );
-            },
-            child: BlocBuilder<Counter, int>(
-              bloc: myCounter,
-              builder: (context, state) {
-                return Center(
-                  child: Text(
-                    '$state',
-                    style: const TextStyle(
-                      fontSize: 35,
-                      fontWeight: FontWeight.w500,
+              if (state >= 10) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    backgroundColor: Colors.green.shade400,
+                    duration: const Duration(milliseconds: 500),
+                    content: Text(
+                      '$state adalah data genap!',
                     ),
                   ),
                 );
-              },
-            ),
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    backgroundColor: Colors.red.shade500,
+                    duration: const Duration(milliseconds: 500),
+                    content: const Text(
+                      'MASI DI BAWAH 10',
+                    ),
+                  ),
+                );
+              }
+            },
           ),
           const SizedBox(height: 20),
           Row(
