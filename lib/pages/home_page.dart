@@ -16,6 +16,7 @@ class HomePage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // BlocConsumer merupakan gabungan dari bloc builder dan bloc listener
           BlocConsumer<Counter, int>(
             bloc: myCounter,
             buildWhen: (previous, current) {
