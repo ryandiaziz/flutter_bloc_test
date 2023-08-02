@@ -56,7 +56,31 @@ class HomePage extends StatelessWidget {
                 ontap: () => mycounter.increament(),
               )
             ],
-          )
+          ),
+          GestureDetector(
+            onTap: () {
+              context.read<Counter>().reset();
+            },
+            child: Container(
+              margin: const EdgeInsets.only(top: 30),
+              height: 70,
+              width: 130,
+              decoration: BoxDecoration(
+                color: Colors.yellow.shade700,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Center(
+                child: Text(
+                  'Reset',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
