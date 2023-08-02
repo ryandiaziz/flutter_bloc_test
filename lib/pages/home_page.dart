@@ -7,7 +7,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Counter myCounter = Counter(init: 3);
+    Counter myCounter = Counter(init: 0);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Bloc Builder'),
@@ -16,26 +16,39 @@ class HomePage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BlocBuilder<Counter, int>(
+          BlocListener<Counter, int>(
             bloc: myCounter,
-            buildWhen: (previous, current) {
-              if (current % 2 == 1) {
+            listenWhen: (previous, current) {
+              if (current % 2 == 0) {
                 return true;
               } else {
                 return false;
               }
             },
-            builder: (context, state) {
-              return Center(
-                child: Text(
-                  '$state',
-                  style: const TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.w500,
+            listener: (context, state) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: const Duration(milliseconds: 300),
+                  content: Text(
+                    '$state adalah data genap!',
                   ),
                 ),
               );
             },
+            child: BlocBuilder<Counter, int>(
+              bloc: myCounter,
+              builder: (context, state) {
+                return Center(
+                  child: Text(
+                    '$state',
+                    style: const TextStyle(
+                      fontSize: 35,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
           const SizedBox(height: 20),
           Row(
