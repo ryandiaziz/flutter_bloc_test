@@ -14,10 +14,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // dependency injection pada parent wide agar state dapat digunakan pada child widget
-    return BlocProvider(
-      create: (context) => Counter(),
-      child: const MaterialApp(
-        home: HomePage(),
+    return MaterialApp(
+      home: BlocProvider(
+        create: (context) => Counter(),
+        child: const HomePage(),
       ),
     );
   }
