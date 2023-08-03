@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_test/bloc/counter.dart';
-import 'package:flutter_bloc_test/pages/oher_page.dart';
 
 import '../widgets/button.dart';
 
@@ -19,15 +18,7 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Navigator.of(context).push(
-          //   MaterialPageRoute(
-          //     builder: (context) => BlocProvider.value(
-          //       value: mycounter,
-          //       child: const OtherPage(),
-          //     ),
-          //   ),
-          // );
-          Navigator.of(context).pushNamed('/other');
+          Navigator.of(context).pushNamed('other');
         },
         child: const Icon(Icons.arrow_forward),
       ),
