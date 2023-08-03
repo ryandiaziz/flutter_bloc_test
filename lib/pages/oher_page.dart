@@ -25,7 +25,7 @@ class OtherPage extends StatelessWidget {
               ),
               child: Center(
                 child: BlocBuilder(
-                  bloc: context.read<Counter>(),
+                  bloc: context.read<CounterBloc>(),
                   builder: (context, state) {
                     return Text(
                       '$state',
@@ -41,7 +41,7 @@ class OtherPage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                context.read<Counter>().reset();
+                context.read<CounterBloc>().reset();
               },
               child: Container(
                 margin: const EdgeInsets.only(top: 30),

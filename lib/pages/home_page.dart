@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_test/bloc/counter.dart';
+import 'package:flutter_bloc_test/bloc/theme.dart';
 
 import '../widgets/button.dart';
 
@@ -10,11 +11,25 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // deklarasi state agar lebih mudah digunakan
-    Counter mycounter = BlocProvider.of<Counter>(context);
+    CounterBloc mycounter = BlocProvider.of<CounterBloc>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Bloc Builder'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              context.read<ThemeBloc>().changeTheme();
+            },
+            icon: BlocBuilder<ThemeBloc, bool>(
+              builder: (context, state) {
+                return state
+                    ? const Icon(Icons.dark_mode)
+                    : const Icon(Icons.sunny);
+              },
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -65,7 +80,7 @@ class HomePage extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              context.read<Counter>().reset();
+              context.read<CounterBloc>().reset();
             },
             child: Container(
               margin: const EdgeInsets.only(top: 30),
