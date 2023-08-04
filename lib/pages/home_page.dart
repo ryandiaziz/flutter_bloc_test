@@ -41,16 +41,46 @@ class HomePage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Center(
-                child: BlocBuilder<CounterBloc, int>(
-                  builder: (context, state) {
-                    return Text(
-                      '$state',
-                      style: const TextStyle(
-                        fontSize: 35,
-                        color: Colors.white,
-                      ),
-                    );
-                  },
+                child: MultiBlocListener(
+                  listeners: [
+                    BlocListener<CounterBloc, int>(
+                      listener: (context, state) {
+                        if (state == 10) {
+                          context.read<ThemeBloc>().changeTheme();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              duration: Duration(seconds: 1),
+                              content: Text('Mengubah Thema'),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                    BlocListener<ThemeBloc, bool>(
+                      listener: (context, state) {
+                        if (!state) {
+                          context.read<CounterBloc>().reset();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              duration: Duration(seconds: 1),
+                              content: Text('Mereset Data'),
+                            ),
+                          );
+                        }
+                      },
+                    )
+                  ],
+                  child: BlocBuilder<CounterBloc, int>(
+                    builder: (context, state) {
+                      return Text(
+                        '$state',
+                        style: const TextStyle(
+                          fontSize: 35,
+                          color: Colors.white,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
