@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_test/app.dart';
 import 'package:flutter_bloc_test/bloc/counter.dart';
 import 'package:flutter_bloc_test/bloc/theme.dart';
+
+import 'routes/routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,8 +14,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // dependency injection pada parent wide agar state dapat digunakan pada child widget
-    print('APP BUILD [MAIN]');
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -24,7 +23,15 @@ class MyApp extends StatelessWidget {
           create: (context) => ThemeBloc(),
         ),
       ],
-      child: const App(),
+      child: BlocBuilder<ThemeBloc, bool>(
+        builder: (context, state) {
+          return MaterialApp(
+            theme: state ? ThemeData.light() : ThemeData.dark(),
+            debugShowCheckedModeBanner: false,
+            onGenerateRoute: Routes.onGenerateRoute,
+          );
+        },
+      ),
     );
   }
 }

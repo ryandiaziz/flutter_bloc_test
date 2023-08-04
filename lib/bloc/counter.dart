@@ -1,11 +1,9 @@
 import 'package:bloc/bloc.dart';
 
 class CounterBloc extends Cubit<int> {
-  CounterBloc({this.init = 0}) : super(init);
+  CounterBloc() : super(0);
 
-  int init;
-
-  void increament() => emit(state + 1);
-  void decreament() => emit(state - 1);
+  void add() => emit(state + 1);
+  void minus() => emit(state - 1);
   void reset() => emit(state - state);
 }

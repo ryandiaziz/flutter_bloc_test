@@ -4,15 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/counter.dart';
 import '../bloc/theme.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class OtherPage extends StatelessWidget {
+  const OtherPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    print('BUILD [HOME PAGE]');
+    print('BUILD [OTHER PAGE]');
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Practice Bloc'),
+        title: const Text('Other Page'),
         centerTitle: true,
         actions: [
           IconButton(
@@ -23,12 +23,6 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed('other');
-        },
-        child: const Icon(Icons.arrow_forward),
-      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -37,7 +31,7 @@ class HomePage extends StatelessWidget {
               height: 70,
               width: 120,
               decoration: BoxDecoration(
-                color: Colors.amber.shade300,
+                color: Colors.green.shade800,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Center(
@@ -56,21 +50,17 @@ class HomePage extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () => context.read<CounterBloc>().minus(),
-                child: const Icon(Icons.remove),
-              ),
-              ElevatedButton(
-                onPressed: () => context.read<CounterBloc>().add(),
-                child: const Icon(Icons.add),
-              ),
-            ],
-          )
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              fixedSize: const Size(140, 60),
+            ),
+            onPressed: () {
+              context.read<CounterBloc>().reset();
+            },
+            child: const Icon(Icons.recycling_rounded),
+          ),
         ],
       ),
     );
