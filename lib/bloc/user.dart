@@ -16,4 +16,9 @@ class UserBloc extends Cubit<Map<String, dynamic>> {
       'age': age,
     });
   }
+
+  int calculate() {
+    int result = state['age'] + 10;
+    return result;
+  }
 }

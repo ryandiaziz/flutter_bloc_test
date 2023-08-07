@@ -8,7 +8,14 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('BUILD SCAFFOLD');
+    // extension method
+    // 1. context.read() -> hanya membaca sekali saat pertama kali
+    // 2. context.watch() -> membaca saat state mengalamu perubahan
+    // 3. context.select() -> membaca perubahan state tententu
+    // ~~~~~~ Implement ~~~~~~
     UserBloc userBloc = context.read<UserBloc>();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Bloc Selector'),
@@ -20,13 +27,18 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: ListTile(
               title: const Text('Name'),
-              subtitle: BlocSelector<UserBloc, Map<String, dynamic>, String>(
-                selector: (state) => state['name'],
-                builder: (context, state) {
-                  print('BUILD NAME');
-                  return Text(state);
-                },
-              ),
+              subtitle: Builder(builder: (context) {
+                // ~ Penggunaan extension method watch
+                // UserBloc userBloc = context.watch<UserBloc>();
+                // return Text(userBloc.state['age'].toString());
+
+                // ~Penggunaan extention method select
+                String userBlocN = context.select<UserBloc, String>(
+                  (value) => value.state['name'],
+                );
+                print('BUILD NAME');
+                return Text(userBlocN);
+              }),
               style: ListTileStyle.list,
               tileColor: Colors.amber.shade300,
             ),
@@ -35,13 +47,18 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: ListTile(
               title: const Text('Age'),
-              subtitle: BlocSelector<UserBloc, Map<String, dynamic>, int>(
-                selector: (state) => state['age'],
-                builder: (context, state) {
-                  print('BUILD AGE');
-                  return Text('$state');
-                },
-              ),
+              subtitle: Builder(builder: (context) {
+                print('BUILD AGE');
+                // ~ Penggunaan extension method watch
+                // UserBloc userBloc = context.watch<UserBloc>();
+                // return Text(userBloc.state['age'].toString());
+
+                // ~Penggunaan extention method select
+                int userBlocA = context.select<UserBloc, int>(
+                  (value) => value.state['age'],
+                );
+                return Text(userBlocA.toString());
+              }),
               style: ListTileStyle.list,
               tileColor: Colors.amber.shade300,
             ),
